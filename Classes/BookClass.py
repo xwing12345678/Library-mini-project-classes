@@ -5,47 +5,47 @@ class Book:
     def __init__(self,title:str,author:str,copies:int) -> None:
         if copies < 1:
             raise ValueError("copies must be at least 1")
-        self.title = title
-        self.author = author
-        self.copies = copies
-        self.available = copies
+        self.__title = title
+        self.__author = author
+        self.__copies = copies
+        self.__available:int = copies
         Book.total_books = Book.total_books + 1
 
     @property
     def title(self):
         return self.__title
 
-    @title.setter
-    def title(self, title:str):
-        self.__title = title
+    @property
+    def author(self):
+        return self.__author
 
-    @title.getter
-    def title(self):
-        return self.__title
+
+    @property
+    def copies(self):
+        return self.__copies
+
+    @property
+    def available(self)->int: 
+        return self.__available
+
+    def is_available(self)->bool:
+        return self.__available > 0
+   
+    def borrow(self):
+        if not self.is_available():
+            raise ValueError("copies must be at least 1")
+        self.__available = self.__available - 1
+
+    def return_book(self):
+        if self.available == self.copies:
+            raise ValueError("All copies are already in the library!")
+        self.__available = self.__available + 1
     
-    @property
-    def author(self):
-        return self.__author
+    
+    def __str__(self)->str:
+        return (self.title + " by " + self.author + " ("
+                + str(self.available) + "/" + str(self.copies) + " available)")
 
-    @author.setter
-    def author(self, author:str):
-        self.__author = author
-
-    @author.getter
-    def author(self):
-        return self.__author
-
-    @property
-    def copies(self):
-        return self.__copies
-
-    @copies.setter
-    def copies(self, copies:int):
-        self.__copies = copies
-
-    @copies.getter
-    def copies(self):
-        return self.__copies
 
 
 
